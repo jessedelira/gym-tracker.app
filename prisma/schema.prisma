@@ -21,6 +21,7 @@ model User {
   completedSession CompletedSession[]
   activeSession    ActiveSession[]
   userPreferences  UserPreference[]
+  userSetting      UserSetting[]
 
   @@map("user")
 }
@@ -121,6 +122,22 @@ model UserPreference {
   userId     String     @map("user_id")
 
   @@map("user_preference")
+}
+
+model UserSetting {
+  id       String @id @default(cuid())
+  timezone TimezoneMap @relation(fields: [timezoneId], references: [id], onDelete: Cascade)
+  timezoneId String @map("timezone_map_id")
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String @map("user_id")
+  @@map("user_setting")
+}
+
+model TimezoneMap {
+  id       String @id @default(cuid())
+  timezone String @unique @map("timezone")
+  userSetting UserSetting[]
+  @@map("timezone_map")
 }
 
 enum Preference {

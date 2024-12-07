@@ -62,10 +62,51 @@ export const completedSessionRouter = createTRPCRouter({
 			// find all session for active routine
 			// find all completed sessions
 
+			console.log('--------------------------------');
+			console.log('input.currentDate', input.currentDate);
+			console.log(
+				'input.currentDate.toISOString()',
+				input.currentDate.toISOString(),
+			);
+			console.log(
+				'input.currentDate in EST',
+				input.currentDate.toLocaleString('en-US', {
+					timeZone: 'America/New_York',
+				}),
+			);
+			console.log('--------------------------------');
+
 			const startOfDayCurrentDate = new Date(input.currentDate);
 			startOfDayCurrentDate.setHours(0, 0, 0, 0);
+
+			console.log('startOfDayCurrentDate', startOfDayCurrentDate);
+			console.log(
+				'startOfDayCurrentDate.toISOString()',
+				startOfDayCurrentDate.toISOString(),
+			);
+			console.log(
+				'startOfDayCurrentDate in EST',
+				startOfDayCurrentDate.toLocaleString('en-US', {
+					timeZone: 'America/New_York',
+				}),
+			);
+			console.log('--------------------------------');
+
 			const endOfDayCurrentDate = new Date(input.currentDate);
 			endOfDayCurrentDate.setHours(23, 59, 59, 999);
+
+			console.log('endOfDayCurrentDate', endOfDayCurrentDate);
+			console.log(
+				'endOfDayCurrentDate.toISOString()',
+				endOfDayCurrentDate.toISOString(),
+			);
+			console.log(
+				'endOfDayCurrentDate in EST',
+				endOfDayCurrentDate.toLocaleString('en-US', {
+					timeZone: 'America/New_York',
+				}),
+			);
+			console.log('--------------------------------');
 
 			const sessionsOnActiveRoutine = await prisma.session.findMany({
 				where: {

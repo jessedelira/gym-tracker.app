@@ -40,6 +40,23 @@ const seedUsers = async () => {
 				enabled: true,
 			},
 		});
+
+		const estTimezone = await prisma.timezoneMap.findUnique({
+			where: {
+				timezone: 'Eastern Standard Time (EST)',
+			},
+		});
+
+		if (!estTimezone) {
+			throw new Error('Failed to find timezone');
+		}
+
+		await prisma.userSetting.create({
+			data: {
+				userId: user.id,
+				timezoneId: estTimezone.id,
+			},
+		});
 	}
 	await prisma.$disconnect();
 };
